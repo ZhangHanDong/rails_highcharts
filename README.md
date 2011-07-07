@@ -1,7 +1,7 @@
 Highcharts for Rails 3
 =========================================================================
 
-__modify from: [highcharts-rails](https://github.com/loudpixel/highcharts-rails "highcharts-rails"), with Highcharts v2.1.5 and Rails 3__
+__modify from: [lazy-high-charts](https://github.com/michelson/lazy_high_charts "lazy-high-charts"), with Highcharts v2.1.5 and Rails 3__
 
 __use: [Highcharts](http://highcharts.com/ "Highcharts")__
 
@@ -16,91 +16,53 @@ Rails3.0.8+/Ruby1.8.7+
     gem 'rails_highcharts'
 
     rails g rails_highcharts:install
-
-in footer layout
-
-    $(document).ready(function(){
-      <%= javascript_include_tag :highcharts  %>
-      <%= yield :javascript %>
-    });
-
-in our controller:
-
-    # Create a pie chart
-    browser_data = [
-      {:name => 'Safari',               :y => 3.57,     :identifier => 'applewebkit'},
-      {:name => 'Firefox',              :y => 22.32,    :identifier => 'gecko'}, 
-      {:name => 'Internet Explorer',    :y => 56.9,     :identifier => 'msie'}, 
-      {:name => 'Other',                :y => 17.21}
-    ]
  
-    user_agent = request.env['HTTP_USER_AGENT'].downcase
+Usage in Controller:
  
-    # determine the users browser and pull that piece of the pie chart
-    browser_data.each do |browser|
-      if user_agent.index(browser[:identifier].to_s)
-        browser[:sliced] = true
- 
-        # some browsers will match more than one identifier, stop looking as soon as one is found
-        break;
+     @h = HighChart.new('graph') do |f|
+        f.series(:name=>'John', :data=>[3, 20, 3, 5, 4, 10, 12 ,3, 5,6,7,7,80,9,9])
+        f.series(:name=>'Jane', :data=> [1, 3, 4, 3, 3, 5, 4,-46,7,8,8,9,9,0,0,9] )
       end
-    end
+
+Without overriding entire option , (only change a specific option index):
  
-    # format the labels that show up on the chart
-    pie_label_formatter = '
-      function() {
-        if (this.y > 15) return this.point.name;
-      }'
+     @h = HighChart.new('graph') do |f|
+      .....
+          f.options[:chart][:defaultSeriesType] = "area"
+          f.options[:chart][:inverted] = true
+          f.options[:legend][:layout] = "horizontal"
+          f.options[:x_axis][:categories] = ["uno" ,"dos" , "tres" , "cuatro"]
+     ......
+
+Overriding entire option:
  
-    # format the tooltips
-    pie_tooltip_formatter = '
-      function() {
-        return "<strong>" + this.point.name + "</strong>: " + this.y + " %";
-      }'
+     @h = HighChart.new('graph') do |f|
+       .....
+          f.x_axis(:categories => @days.reverse! , :labels=>{:rotation=>-45 , :align => 'right'})
+          f.chart({:defaultSeriesType=>"spline" , :renderTo => "myRenderArea" , :inverted => true})
+       .....
+
+Usage in layout:
  
-    @pie_chart = 
-        RailsHighcharts.pie({
-        :chart => {
-              :renderTo => "pie-chart-container",
-              :margin => [50, 30, 0, 30]
-            },
-            :credits => {
-              :enabled => true,
-              :href => 'http://marketshare.hitslink.com/browser-market-share.aspx?qprid=3',
-              :text => 'Data provided by NETMARKETSHARE'
-            },
-            :plotOptions => {
-              :pie => {
-                :dataLabels => {
-                  :formatter => pie_label_formatter, 
-                  :style => {
-                    :textShadow => '#000000 1px 1px 2px'
-                  }
-                }
-              }
-            },
-          :series => [
-                {
-                    :type => 'pie',
-                    :data => browser_data
-                }
-            ],
-            :subtitle => {
-              :text => 'January 2010'
-            },
-            :title => {
-              :text => 'Browser Market Share'
-            },
-            :tooltip => {
-              :formatter => pie_tooltip_formatter
-            },
-        })
+    <%= javascript_include_tag :highcharts %> 
+    <!--[if IE]> <%= javascript_include_tag :ie_high_charts %> <![endif]-->
  
-in your views:
+Usage in view:
  
-    <!-- container to hold the pie chart -->
-    <div id="pie-chart-container" class="chart-container"></div>
+    <%= high_chart("my_id", @h) %>
+
+Passing formatting options in the view to the helper block , because all the helper options declared in the controller are converted in strict/valid json (quoted key); so we need to extend the json object with some js.
  
-    <% content_for :javascript do %>
-        <%= @pie_chart %>
-    <% end %>
+      <% high_chart("my_id", @h) do |c| %>
+            <%= "options.tooltip.formatter = function() { return '<b>HEY!!!'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y +' units';}" %>
+            <%= "options.xAxis.labels.formatter = function() { return 'ho';}" %>
+            <%= "options.yAxis.labels.formatter = function() { return 'hey';}" %>
+       <%end %> 
+
+Option reference:
+ 
+     http://www.highcharts.com/ref/
+
+HighCharts License:
+ 
+     http://www.highcharts.com/license

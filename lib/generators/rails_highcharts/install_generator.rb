@@ -13,7 +13,11 @@ module RailsHighcharts
       source_root File.expand_path('../media', __FILE__)
       desc "Copies media files to main project"
       def copy_media_files
-        copy_file "../media/javascripts/highcharts.js",  "public/javascripts/highcharts/highcharts.js"
+        js_files = %w|highcharts.js excanvas.compiled.js|
+
+        js_files.each do |js|
+          copy_file "../media/javascripts/#{js}",  "public/javascripts/highcharts/#{js}"
+        end
       end
     end
 
