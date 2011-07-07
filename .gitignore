@@ -1,0 +1,13 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+.DS_Store
+app/.DS_Store
+lib/.DS_Store
+lib/generators/.DS_Store
+lib/generators/rails_highcharts/.DS_Store
+lib/generators/rails_highcharts/media/.DS_Store
+lib/generators/rails_highcharts/media/images/.DS_Store
+lib/generators/rails_highcharts/media/javascripts/.DS_Store
+lib/rails_highcharts/.DS_Store
