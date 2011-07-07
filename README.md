@@ -59,7 +59,7 @@ in our controller:
       }'
  
     @pie_chart = 
-        Highchart.pie({
+        RailsHighcharts.pie({
         :chart => {
               :renderTo => "pie-chart-container",
               :margin => [50, 30, 0, 30]
