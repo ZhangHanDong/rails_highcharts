@@ -12,7 +12,7 @@ describe "HighChart" do
     @html_options = {:class => "stylin"}
     @options      = {:bars => {:show => true}}
 
-    @flot         = RailsHighcharts.new(@placeholder, @html_options) {|chart| chart.options = @options }
+    @flot         = HighChart.new(@placeholder, @html_options) {|chart| chart.options = @options }
   end
   
   
@@ -20,16 +20,16 @@ describe "HighChart" do
   # this is almost all flotomatic stuff
   describe "initialization" do
     it "should take an optional 'placeholder' argument" do
-       RailsHighcharts.new(@placeholder).placeholder.should == @placeholder
-       RailsHighcharts.new.placeholder.should == nil
+       HighChart.new(@placeholder).placeholder.should == @placeholder
+       HighChart.new.placeholder.should == nil
      end
      
     it "should take an optional html_options argument (defaulting to 300px height)" do
-       RailsHighcharts.new(@html_options).placeholder.should == @html_options
+       HighChart.new(@html_options).placeholder.should == @html_options
      end
      
     it "should set options by default" do
-       RailsHighcharts.new.options.should == {
+       HighChart.new.options.should == {
          :subtitle=>{}, 
          :chart=>{:renderTo=>nil, :defaultSeriesType=>"areaspline"}, 
          :plot_options=>{:areaspline=>{:fillOpacity=>0.5}}, 
@@ -54,22 +54,22 @@ describe "HighChart" do
      end
      
     it "should set data empty by default" do
-     RailsHighcharts.new.data.should == []
+     HighChart.new.data.should == []
     end
 
     it "should take a block setting attributes" do
-     chart = RailsHighcharts.new {|f| f.data = @data ; f.options = @options }
+     chart = HighChart.new {|f| f.data = @data ; f.options = @options }
      chart.data.should == @data
      chart.options.should == @options
     end
      
     it "should take a block setting attributes" do
-      chart = RailsHighcharts.new {|f|  f.options[:legend][:layout] = "horizontal" }
+      chart = HighChart.new {|f|  f.options[:legend][:layout] = "horizontal" }
       chart.options[:legend][:layout].should == "horizontal"
     end
       
     it "should change a block data without overriding options" do
-      chart = RailsHighcharts.new('graph') do |f|
+      chart = HighChart.new('graph') do |f|
           f.series(:name=>'John', :data=>[3, 20])
           f.series(:name=>'Jane',:data=> [1, 3] )        
           # without overriding 
@@ -86,7 +86,7 @@ describe "HighChart" do
     end
     
     it "should change a block data with overriding entire options" do
-      chart = RailsHighcharts.new('graph') do |f|
+      chart = HighChart.new('graph') do |f|
           f.series(:name=>'John', :data=>[3, 20])
           f.series(:name=>'Jane', :data=>[1, 3] )        
           f.title({ :text=>"example test title from controller"})
@@ -103,7 +103,7 @@ describe "HighChart" do
     end
     
     it "should have subtitles" do
-       chart = RailsHighcharts.new('graph') do |f|
+       chart = HighChart.new('graph') do |f|
             f.series(:name=>'John',:data=> [3, 20])
             f.series(:name=>'Jane', :data=>[1, 3] )        
             f.title({ :text=>"example test title from controller"})

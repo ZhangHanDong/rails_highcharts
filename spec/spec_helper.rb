@@ -8,7 +8,7 @@ require 'action_controller'
 require 'action_mailer'
 
 require File.dirname(__FILE__) + "/../app/helpers/rails_highcharts/rails_highcharts_helper"
-require File.dirname(__FILE__) + "/../app/models/rails_highcharts"
+require File.dirname(__FILE__) + "/../app/models/high_chart"
 
 require 'webrat'
 

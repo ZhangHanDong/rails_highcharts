@@ -8,19 +8,19 @@ describe RailsHighchartsHelper do
   before(:each) do
     @class       = "stylin"
     @placeholder = "placeholder"
-    @chart        = RailsHighcharts.new(@placeholder)
+    @chart        = HighChart.new(@placeholder)
     @data        = "data"
     @options     = "options"
   end
   
   describe "high_chart_helper" do
     it "should return a div with an id of high_chart object" do
-      hc = RailsHighcharts.new("placeholder", :class => 'stylin')
+      hc = HighChart.new("placeholder", :class => 'stylin')
       high_chart(hc.placeholder, hc).should have_selector('div', :id => hc.placeholder, :class => 'stylin')
     end
 
     it "should return a script" do
-      hc = RailsHighcharts.new("placeholder")
+      hc = HighChart.new("placeholder")
       high_chart(hc.placeholder, hc).should have_selector('script')
     end
   end
