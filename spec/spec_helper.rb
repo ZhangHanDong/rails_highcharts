@@ -1,13 +1,14 @@
 # coding: utf-8
-require 'rubygems'
 require 'rails'
 require 'active_support'
-require 'actionpack'
-require 'activerecord'
+require 'action_pack'
+require 'action_view'
+require 'action_controller'
+require 'action_controller'
+require 'action_mailer'
 
-
-require File.expand_path(File.join(File.dirname(__FILE__), '../lib/rails_highcharts/rails_highcharts'))
 require File.dirname(__FILE__) + "/../app/helpers/rails_highcharts/rails_highcharts_helper"
+require File.dirname(__FILE__) + "/../app/models/rails_highcharts"
 
 require 'webrat'
 
