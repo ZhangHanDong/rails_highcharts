@@ -1,9 +1,9 @@
 require 'rake'
 require 'rails/generators'
 
-# ==================================
+# ====================================
 # = rails g rails_highcharts:install =
-# ==================================
+# ====================================
 
 module RailsHighcharts
   module Generators
@@ -13,7 +13,7 @@ module RailsHighcharts
       source_root File.expand_path('../media', __FILE__)
       desc "Copies media files to main project"
       def copy_media_files
-        #TODO
+        copy_file "../media/javascripts/highcharts.js",  "public/javascripts/highcharts/highcharts.js"
       end
     end
 

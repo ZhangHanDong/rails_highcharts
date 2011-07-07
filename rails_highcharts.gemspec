@@ -2,7 +2,8 @@
 $:.push File.expand_path("../lib", __FILE__)
 require "rails_highcharts/version"
 require "rails_highcharts/engine"
-require "rails"
+require "rails_highcharts/hash_extend"
+require "rake"
 
 Gem::Specification.new do |s|
   s.name        = "rails_highcharts"
