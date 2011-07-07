@@ -1,7 +1,7 @@
 Highcharts for Rails 3
 =========================================================================
 
-__modify from: [highcharts-rails](https://github.com/loudpixel/highcharts-rails "highcharts-rails")__
+__modify from: [highcharts-rails](https://github.com/loudpixel/highcharts-rails "highcharts-rails"), with Highcharts v2.1.5 and Rails 3__
 
 __use: [Highcharts](http://highcharts.com/ "Highcharts")__
 
